@@ -31,8 +31,18 @@ class MarkovMachine {
   /** return random text from chains */
 
   makeText(numWords = 100) {
-    
+    let idx = Math.floor(Math.random() * this.words.length + 1);
+    let currentWord = this.words[idx];
+    let text = [];
+    while(text.length < numWords && currentWord !== null) {
+      let randomChain = Math.floor(Math.random() * this.chains.get(currentWord).length + 1);
+      text.push(currentWord);
+      currentWord = this.chains.get(currentWord)[randomChain];
+    }
+    return text.join(" ");
   }
 }
 
-let mm = new MarkovMachine("the cat in the hat is cool becuase I said so, again")
+module.exports = {
+  MarkovMachine: MarkovMachine
+};
