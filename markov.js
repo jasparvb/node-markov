@@ -31,11 +31,11 @@ class MarkovMachine {
   /** return random text from chains */
 
   makeText(numWords = 100) {
-    let idx = Math.floor(Math.random() * this.words.length + 1);
+    let idx = Math.floor(Math.random() * this.words.length);
     let currentWord = this.words[idx];
     let text = [];
     while(text.length < numWords && currentWord !== null) {
-      let randomChain = Math.floor(Math.random() * this.chains.get(currentWord).length + 1);
+      let randomChain = Math.floor(Math.random() * this.chains.get(currentWord).length);
       text.push(currentWord);
       currentWord = this.chains.get(currentWord)[randomChain];
     }

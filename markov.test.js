@@ -15,6 +15,6 @@ describe("Markov tests", function() {
   test('makeText', function() {
     mm.makeChains("the cat in the hat");
     let text = mm.makeText();
-    expect(text).toEqual([null]);
+    expect(text).toEqual(expect.any(String));
   });
 });
