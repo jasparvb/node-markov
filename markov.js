@@ -18,11 +18,12 @@ class MarkovMachine {
 
   makeChains() {
     let wordChains = new Map();
-    for(let i = 0; i < this.words.length; i++) {
-      if(!wordChains.has(this.words[i])) {
-        wordChains.set(this.words[i], []);
+    for(let i = 0; i < this.words.length - 1; i++) {
+      let bigram = `${this.words[i]} ${this.words[i+1]}`;
+      if(!wordChains.has(bigram)) {
+        wordChains.set(bigram, []);
       }
-      wordChains.get(this.words[i]).push(this.words[i+1] || null);
+      wordChains.get(bigram).push(this.words[i+2] || null);
     }
     this.chains = wordChains;
   }
@@ -31,13 +32,15 @@ class MarkovMachine {
   /** return random text from chains */
 
   makeText(numWords = 100) {
-    let idx = Math.floor(Math.random() * this.words.length);
-    let currentWord = this.words[idx];
+    let keys = Array.from(this.chains.keys());
+    let idx = Math.floor(Math.random() * keys.length);
+    let currentWord = keys[idx];
     let text = [];
     while(text.length < numWords && currentWord !== null) {
+      let [word1, word2] = currentWord.split(" ");
       let randomChain = Math.floor(Math.random() * this.chains.get(currentWord).length);
-      text.push(currentWord);
-      currentWord = this.chains.get(currentWord)[randomChain];
+      text.push(word1);
+      currentWord = word2 + " " + this.chains.get(currentWord)[randomChain];
     }
     return text.join(" ");
   }
