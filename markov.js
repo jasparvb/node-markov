@@ -22,7 +22,7 @@ class MarkovMachine {
       if(!wordChains.has(this.words[i])) {
         wordChains.set(this.words[i], []);
       }
-      wordChains.get(this.words[i]).push(this.words[i+1]);
+      wordChains.get(this.words[i]).push(this.words[i+1] || null);
     }
     this.chains = wordChains;
   }
